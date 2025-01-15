@@ -16,12 +16,15 @@ function Experts({ onGetStartedClick }) {
           creative potential through innovative projects, and gain proficiency
           in coding with step-by-step guidance.
         </p>
-        <button
-          onClick={onGetStartedClick}
-          className="w-[30%] bg-black text-white font-bold p-3 rounded-lg m-3"
-        >
-          Get Started
-        </button>
+        <div>
+          <span className="text-[#3333b0] font-bold">Click here</span>
+          <button
+            onClick={onGetStartedClick}
+            className="w-[150px] h-[50px] bg-[#a531af] text-white font-bold p-3 rounded-lg m-3 hover:bg-[#3f61da] hover:scale-110 transition-transform duration-100 animate-pulse"
+          >
+            Get Started
+          </button>
+        </div>
       </div>
     </div>
   );
