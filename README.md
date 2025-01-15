@@ -15,11 +15,11 @@ Welcome to the **City Stay & Parking Booking Platform**, an all-in-one solution 
 
 - **Frontend:**
   - HTML, CSS, JavaScript
-  - React.js (or another frontend framework)
-  - Bootstrap (for responsive design)
+  - React.js
+  - Bootstrap
 - **Backend:**
-  - Node.js (with Express.js for API management)
-  - Mysql (for database storage)
+  - Node.js
+  - Mysql
 - **Authentication:**
   - JWT (JSON Web Tokens) for secure user authentication
 
