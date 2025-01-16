@@ -1,4 +1,5 @@
 import Logo from "../../assets/logo2.png";
+import Profile from "../../assets/profile_logo.png";
 
 const Menu = [
   {
@@ -55,6 +56,12 @@ const Navbar = () => {
               <button className=" bg-primary/70 hover:scale-105 duration-200 text-white px-4 py-2 rounded-full flex items-center gap-3">
                 Bookings
               </button>
+              <a
+                href="/login"
+                className="font-bold  flex justify-center items-center  tracking-wider "
+              >
+                <img src={Profile} alt="Profile" className="w-12 h-12" />
+              </a>
             </div>
           </div>
         </div>
