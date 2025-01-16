@@ -1,12 +1,23 @@
-// server.js
-const express = require("express");
-const app = express();
-const userRoutes = require("./routes/userRoutes");
+import express from "express";
+import userRoutes from "./routes/userRoutes.js";
+import { execute } from "./config/db.js"; // Import the `execute` function
 
-app.use(express.json()); // middleware to parse JSON bodies
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON bodies
 
 // Routes
 app.use("/api/users", userRoutes);
+
+// Test the database connection
+(async () => {
+  try {
+    const users = await execute("SELECT * FROM users", []); // Test query
+    console.log("Database Test Query Results:", users); // Log fetched users
+  } catch (err) {
+    console.error("Error running test query:", err.message);
+  }
+})();
 
 // Start server
 const PORT = 3000;

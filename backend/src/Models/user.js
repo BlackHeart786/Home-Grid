@@ -1,4 +1,5 @@
-import { execute } from "../config/db";
+//import { execute } from "../config/db";
+import { execute } from "../config/db.js";
 
 class User {
   static async getAllUsers() {
@@ -6,8 +7,8 @@ class User {
     return rows;
   }
 
-  static async getUserById(id) {
-    const [rows] = await execute("SELECT * FROM users WHERE id = ?", [id]);
+  static async getUserById(user_id) {
+    const [rows] = await execute("SELECT * FROM users WHERE user_id = ?", [user_id]);
     return rows[0]; // Returns the first match
   }
 
@@ -20,17 +21,17 @@ class User {
     return result;
   }
 
-  static async updateUser(id, userData) {
+  static async updateUser(user_id, userData) {
     const { name, email } = userData;
     const [result] = await execute(
-      "UPDATE users SET name = ?, email = ? WHERE id = ?",
-      [name, email, id]
+      "UPDATE users SET name = ?, email = ? WHERE user_id = ?",
+      [name, email, user_id]
     );
     return result;
   }
 
-  static async deleteUser(id) {
-    const [result] = await execute("DELETE FROM users WHERE id = ?", [id]);
+  static async deleteUser(user_id) {
+    const [result] = await execute("DELETE FROM users WHERE user_id = ?", [user_id]);
     return result;
   }
 }
