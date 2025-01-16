@@ -1,8 +1,7 @@
-// src/Controllers/userController.js
-const User = require("../Models/user");
+import User from "../Models/user.js";
 
 // Controller functions
-const getAllUsers = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   try {
     const users = await User.getAllUsers();
     res.json(users);
@@ -13,7 +12,7 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-const getUserById = async (req, res) => {
+export const getUserById = async (req, res) => {
   try {
     const user = await User.getUserById(req.params.id);
     if (user) {
@@ -28,7 +27,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     const userData = req.body;
     const result = await User.createUser(userData);
@@ -40,7 +39,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const userData = req.body;
     const result = await User.updateUser(req.params.id, userData);
@@ -56,7 +55,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const result = await User.deleteUser(req.params.id);
     if (result.affectedRows > 0) {
@@ -69,12 +68,4 @@ const deleteUser = async (req, res) => {
       .status(500)
       .json({ message: "Error deleting user", error: err.message });
   }
-};
-
-module.exports = {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser,
 };
