@@ -64,3 +64,15 @@ export const updateUser = async (req, res) => {
       .json({ message: "Error updating user", error: err.message });
   }
 };
+
+export const getAllImages = async (req, res) => {
+  try {
+    const query = "SELECT image_id, image_url, address FROM images";
+    const [rows,fields] = await db.query(query);
+    console.log("rowdata",rows)
+    res.status(501).send(rows);
+    
+  } catch (err) {
+    res.status(501).send({ message: "Error fetching images", error: err.message });
+  }
+};
