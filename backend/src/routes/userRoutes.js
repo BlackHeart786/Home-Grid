@@ -1,8 +1,7 @@
 import express from "express";
 import {
-  getAllUsers,
-  getUserById,
-  createUser,
+  registerUser,
+  loginUser,
   updateUser,
   deleteUser,
 } from "../Controllers/userController.js";
@@ -10,9 +9,9 @@ import {
 const router = express.Router();
 
 // Define routes
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
-router.post("/createUser", createUser);
+
+router.post("/register", registerUser);
+router.post("/login", loginUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 

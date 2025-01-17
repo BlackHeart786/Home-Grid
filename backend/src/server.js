@@ -1,10 +1,10 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes.js";
-import { execute } from "./config/db.js"; // Import the `execute` function
+import { execute } from "./config/db.js";
 
 const app = express();
 
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(express.json());
 
 // Routes
 app.use("/api/users", userRoutes);
@@ -13,7 +13,7 @@ app.use("/api/users", userRoutes);
 (async () => {
   try {
     const users = await execute("SELECT * FROM users", []); // Test query
-    console.log("Database Test Query Results:", users); // Log fetched users
+    console.log("Database Test Query Results:", users);
   } catch (err) {
     console.error("Error running test query:", err.message);
   }

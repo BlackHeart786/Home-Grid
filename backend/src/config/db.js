@@ -1,19 +1,19 @@
 import mysql from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
 const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "griddb",
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
 });
 
 const promisePool = pool.promise();
 
-// Define and export the execute function
 export const execute = async (query, params) => {
   const [results] = await promisePool.execute(query, params);
   return results;
 };
 
-// Export the promisePool if needed elsewhere
 export default promisePool;
