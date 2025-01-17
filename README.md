@@ -14,8 +14,8 @@ Welcome to the **City Stay & Parking Booking Platform**, an all-in-one solution 
 ## 🛠️ Technologies Used
 
 - **Frontend:**
-  - HTML, CSS, JavaScript
   - React.js
+  - Tailwind css
   - Bootstrap
 - **Backend:**
   - Node.js
