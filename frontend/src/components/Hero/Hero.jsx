@@ -33,15 +33,14 @@ const Hero = () => {
                 >
                   We deliver the best{" "}
                   <h1>
-                    <ReactTyped 
+                    <ReactTyped
                       className="p-3"
-                      strings={['property in the city']}
+                      strings={["property in the city"]}
                       typeSpeed={120}
                       backSpeed={70}
                       loop={true}
-                      />
+                    />
                   </h1>
-                  
                 </h1>
                 <div data-aos="fade-up" data-aos-delay="400">
                   <button className="bg-gradient-to-r from-primary to-secondary border-2 border-primary hover:scale-105 duration-200 text-white py-2 px-4 rounded-full">
@@ -84,4 +83,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

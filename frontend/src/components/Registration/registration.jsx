@@ -19,13 +19,26 @@ const Registration = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100  dark:text-black">
-      <div className="w-full max-w-md p-8 space-y-4 bg-white rounded shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-700">
-          Register
-        </h2>
+    <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+      {/* Registration Card */}
+      <div className="z-10 w-full max-w-md px-8 py-10 bg-white bg-opacity-80 rounded-2xl shadow-xl backdrop-blur-lg transform transition-transform duration-300 hover:scale-105">
+        {/* Title */}
+        <div className="text-center mb-6">
+          <h2 className="text-4xl font-extrabold text-gray-800 mb-2">
+            Create Account
+          </h2>
+          <p className="text-sm text-gray-600">
+            Enter your details to register.
+          </p>
+        </div>
+
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
+          {/* Full Name */}
+          <div className="relative">
             <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
@@ -39,10 +52,13 @@ const Registration = () => {
               value={formData.name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your full name"
+              className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-          <div>
+
+          {/* Email Address */}
+          <div className="relative">
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
@@ -56,10 +72,13 @@ const Registration = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-          <div>
+
+          {/* Password */}
+          <div className="relative">
             <label
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
@@ -73,10 +92,13 @@ const Registration = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-          <div>
+
+          {/* Phone Number */}
+          <div className="relative">
             <label
               htmlFor="phone"
               className="block text-sm font-medium text-gray-700"
@@ -90,22 +112,29 @@ const Registration = () => {
               value={formData.phone}
               onChange={handleChange}
               required
-              className="w-full px-4 py-2 mt-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              placeholder="Enter your phone number"
+              className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
-            className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-1"
+            className="w-full px-4 py-3 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-md hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 transition duration-300 ease-in-out"
           >
             Register
           </button>
         </form>
-        <p className="text-sm text-center text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
-            Login
-          </a>
-        </p>
+
+        {/* Links */}
+        <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
+          <p>
+            Already have an account?{" "}
+            <a href="/login" className="text-blue-500 hover:underline">
+              Login
+            </a>
+          </p>
+        </div>
       </div>
     </div>
   );
