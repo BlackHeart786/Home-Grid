@@ -9,11 +9,11 @@ const ListGallery = () => {
     // Fetch gallery images from the backend
     const fetchGalleryImages = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/users/images"); // Backend API endpoint
-        console.log("rresponse from bsckend",response.body)
+        const response = await fetch("http://localhost:3000/api/users/images");
+        console.log("rresponse from bsckend", response.body);
         const data = await response.json();
-        setItems(data); // Update state with fetched images
-        console.log("setItem",items )
+        setItems(data);
+        console.log("setItem", items);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching gallery images:", error);
@@ -23,8 +23,6 @@ const ListGallery = () => {
 
     fetchGalleryImages();
   }, []);
-
-  
 
   return (
     <div className="bg-lightGray">

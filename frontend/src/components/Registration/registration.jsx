@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
@@ -13,19 +14,33 @@ const Registration = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Registration Data:", formData);
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/users/register",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("Registration successful:", response.data);
+      alert("Registration successful!");
+    } catch (err) {
+      console.error("Error during registration:", err);
+      alert("Registration failed: " + err.message);
+    }
   };
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-gradient-to-r from-indigo-500 via-purple-600 to-pink-500">
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
-      {/* Registration Card */}
       <div className="z-10 w-full max-w-md px-8 py-10 bg-white bg-opacity-80 rounded-2xl shadow-xl backdrop-blur-lg transform transition-transform duration-300 hover:scale-105">
-        {/* Title */}
         <div className="text-center mb-6">
           <h2 className="text-4xl font-extrabold text-gray-800 mb-2">
             Create Account
@@ -34,10 +49,7 @@ const Registration = () => {
             Enter your details to register.
           </p>
         </div>
-
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Full Name */}
           <div className="relative">
             <label
               htmlFor="name"
@@ -56,8 +68,6 @@ const Registration = () => {
               className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-
-          {/* Email Address */}
           <div className="relative">
             <label
               htmlFor="email"
@@ -76,8 +86,6 @@ const Registration = () => {
               className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-
-          {/* Password */}
           <div className="relative">
             <label
               htmlFor="password"
@@ -96,8 +104,6 @@ const Registration = () => {
               className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-
-          {/* Phone Number */}
           <div className="relative">
             <label
               htmlFor="phone"
@@ -116,8 +122,6 @@ const Registration = () => {
               className="w-full px-4 py-3 mt-2 text-black placeholder-gray-500 bg-white bg-opacity-60 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition duration-300 ease-in-out"
             />
           </div>
-
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full px-4 py-3 text-white bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg shadow-md hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 transition duration-300 ease-in-out"
@@ -125,8 +129,6 @@ const Registration = () => {
             Register
           </button>
         </form>
-
-        {/* Links */}
         <div className="flex items-center justify-between mt-4 text-sm text-gray-600">
           <p>
             Already have an account?{" "}

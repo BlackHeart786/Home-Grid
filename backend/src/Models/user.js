@@ -27,7 +27,6 @@ class User {
     }
   }
 
-  // Check if user exists and verify password
   static async loginUserDetails(email, password) {
     console.log("loginuser", email, password);
 
@@ -42,7 +41,6 @@ class User {
     }
 
     const user = rows;
-    console.log("User details", user);
     if (!user.password) {
       throw new Error("Password field missing in user record");
     }
@@ -63,10 +61,6 @@ class User {
     return {
       user: {
         user_id: user.user_id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        profile_image: user.profile_image,
       },
       token,
     };

@@ -1,15 +1,52 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios"; // Import axios for HTTP requests
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // To capture and display error messages
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
+
+    // Clear previous errors
+    setError("");
+
+    try {
+      // Sending POST request to your backend login API
+      const response = await axios.post(
+        "http://localhost:3000/api/users/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      // Destructure the response to get the token and user details
+      const { user, token } = response.data;
+
+      // Save the token (e.g., in localStorage or sessionStorage)
+      localStorage.setItem("authToken", token);
+
+      // Optionally, store user details in localStorage (for use in UI)
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // Display success alert with user.user_id
+      alert(`Login successful! Welcome, User ID: ${user.user_id}`);
+
+      // Navigate to a different page on successful login
+      navigate("/"); // Or any page you want to redirect to
+    } catch (err) {
+      // Handle error (e.g., incorrect credentials)
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || "Invalid email or password.");
+      } else {
+        setError("An error occurred. Please try again.");
+      }
+      console.error("Login error:", err);
+    }
   };
 
   return (
@@ -28,6 +65,9 @@ const Login = () => {
             Enter your credentials to access your account.
           </p>
         </div>
+
+        {/* Error Message */}
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
 
         {/* Social Login */}
         <div className="flex justify-center mt-6 space-x-4">

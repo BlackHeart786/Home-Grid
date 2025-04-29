@@ -1,4 +1,5 @@
 import User from "../Models/user.js";
+import { execute } from "../config/db.js";
 
 // Register user
 export const registerUser = async (req, res) => {
@@ -67,12 +68,13 @@ export const updateUser = async (req, res) => {
 
 export const getAllImages = async (req, res) => {
   try {
-    const query = "SELECT image_id, image_url, address FROM images";
-    const [rows,fields] = await db.query(query);
-    console.log("rowdata",rows)
-    res.status(501).send(rows);
-    
+    const query = "SELECT image_id, image_url FROM images";
+    const rows = await execute(query);
+    console.log("rowdata", rows);
+    res.status(200).send(rows);
   } catch (err) {
-    res.status(501).send({ message: "Error fetching images", error: err.message });
+    res
+      .status(500)
+      .send({ message: "Error fetching images", error: err.message });
   }
 };
