@@ -22,7 +22,13 @@ function Experts({ onGetStartedClick }) {
             onClick={onGetStartedClick}
             className="w-[150px] h-[50px] bg-[#a531af] text-white font-bold p-3 rounded-lg m-3 hover:bg-[#3f61da] hover:scale-110 transition-transform duration-100 animate-pulse"
           >
-            Get Started
+            Show Listing
+          </button>
+          <button
+            onClick={onGetStartedClick}
+            className="w-[150px] h-[50px] bg-[#a531af] text-white font-bold p-3 rounded-lg m-3 hover:bg-[#3f61da] hover:scale-110 transition-transform duration-100 animate-pulse"
+          >
+            Add Listing
           </button>
         </div>
       </div>

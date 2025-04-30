@@ -14,6 +14,7 @@ import Plans from "./components/Plans.jsx";
 import ListGallery from "./components/Services/ListGallery.jsx";
 import Login from "./components/Login/login.jsx";
 import Registration from "./components/Registration/registration.jsx";
+import Booking from "./components/Booking/Booking.jsx";
 
 const App = () => {
   const [showListGallery, setShowListGallery] = useState(false);
@@ -28,6 +29,7 @@ const App = () => {
         <Routes>
           <Route path="/Login" element={<Login />} />
           <Route path="/Registration" element={<Registration />} />
+          <Route path="/booking" element={<Booking />} />
 
           <Route
             path="/"

@@ -21,7 +21,7 @@ const Hero = () => {
         <div>
           <Navbar />
         </div>
-        <div className="min-h-[550px] flex justify-center items-center py-12 sm:py-0 ">
+        <div className="min-h-screen flex justify-center items-center py-12 sm:py-0 ">
           <div className="container">
             <div className="grid grid-cols-1 sm:grid-cols-2">
               {/* text content section */}
