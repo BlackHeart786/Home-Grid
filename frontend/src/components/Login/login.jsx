@@ -15,7 +15,6 @@ const Login = () => {
     setError("");
 
     try {
-      // Sending POST request to your backend login API
       const response = await axios.post(
         "http://localhost:3000/api/users/login",
         {
@@ -24,20 +23,16 @@ const Login = () => {
         }
       );
 
-      // Destructure the response to get the token and user details
       const { user, token } = response.data;
 
-      // Save the token (e.g., in localStorage or sessionStorage)
       localStorage.setItem("authToken", token);
 
-      // Optionally, store user details in localStorage (for use in UI)
       localStorage.setItem("user", JSON.stringify(user));
 
-      // Display success alert with user.user_id
       alert(`Login successful! Welcome, User ID: ${user.user_id}`);
 
-      // Navigate to a different page on successful login
-      navigate("/"); // Or any page you want to redirect to
+     
+      navigate("/"); 
     } catch (err) {
       // Handle error (e.g., incorrect credentials)
       if (err.response && err.response.data) {

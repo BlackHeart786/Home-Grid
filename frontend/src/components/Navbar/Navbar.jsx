@@ -1,6 +1,5 @@
 import Logo from "../../assets/logo2.png";
-import Profile from "../../assets/profile_logo.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -14,10 +13,24 @@ const Menu = [
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  const dropdownRef = useRef(null); // Added the missing ref
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleProfileDropdown = () =>
+    setIsProfileDropdownOpen(!isProfileDropdownOpen);
+  const navigate = useNavigate();
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsProfileDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +45,14 @@ const Navbar = () => {
   };
 
   const user = JSON.parse(localStorage.getItem("user"));
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
 
+    setIsProfileDropdownOpen(false);
+
+    navigate("/");
+  };
   return (
     <nav
       className={`fixed w-full top-0 z-50 transition-all duration-300 ${
@@ -74,23 +94,47 @@ const Navbar = () => {
         {/* User Profile (Right) */}
         <div className="flex items-center">
           {user ? (
-            <div className="flex items-center space-x-4">
-              <span className="text-white text-[15px] font-bold hidden sm:block">
-                {user.name || `ID: ${user.user_id}`}
-              </span>
-              <div className="w-10 h-10 rounded-full bg-blue-500/20 border-2 border-blue-400/40 flex items-center justify-center overflow-hidden">
-                {user.profilePic ? (
-                  <img
-                    src={user.profilePic}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-blue-300 font-bold text-lg">
-                    {user.name?.charAt(0) || "U"}
-                  </span>
-                )}
+            <div className="relative" ref={dropdownRef}>
+              <div
+                className="flex items-center space-x-4 cursor-pointer"
+                onClick={toggleProfileDropdown}
+              >
+                <span className="text-white text-[15px] font-bold hidden sm:block">
+                  {user.name || `ID: ${user.user_id}`}
+                </span>
+                <div className="w-10 h-10 rounded-full bg-blue-500/20 border-2 border-blue-400/40 flex items-center justify-center overflow-hidden">
+                  {user.profilePic ? (
+                    <img
+                      src={user.profilePic}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-blue-300 font-bold text-lg">
+                      {user.name?.charAt(0) || "U"}
+                    </span>
+                  )}
+                </div>
               </div>
+
+              {/* Profile Dropdown */}
+              {isProfileDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-700">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm text-white hover:bg-gray-700"
+                    onClick={() => setIsProfileDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left block px-4 py-2 text-sm text-white hover:bg-gray-700"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
             <Link to="/login" className="flex items-center space-x-1 group">

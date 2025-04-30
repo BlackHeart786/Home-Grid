@@ -7,21 +7,48 @@ const secret = process.env.JWT_PASS;
 class User {
   static async registerUser(userData) {
     const { name, email, password, phone, profile_image } = userData;
-
+  
+    // Generate user_id
     const namePrefix = name.slice(0, 3).toUpperCase();
     const randomSuffix = crypto.randomInt(1000, 9999);
-
     const user_id = `${namePrefix}${randomSuffix}`;
-
+  
     const hashedPassword = await bcrypt.hash(password, 6);
+  
+    // Set default image path (relative to your public folder)
+    const defaultImagePath = '/images/default-profile.avif';
+    const finalProfileImage = profile_image || defaultImagePath;
+    
+    const createdAt = new Date();
+    const updatedAt = createdAt;
+    const lastLogin = null; 
+    const status = 'active';
 
     try {
       const result = await execute(
-        "INSERT INTO users (user_id, name, email, password, phone, profile_image) VALUES (?, ?, ?, ?, ?, ?)",
-        [user_id, name, email, hashedPassword, phone, profile_image]
+        `INSERT INTO users 
+         (user_id, name, email, password, phone, profile_image, created_at, updated_at, last_login, status) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          user_id, 
+          name, 
+          email, 
+          hashedPassword, 
+          phone, 
+          finalProfileImage,
+          createdAt,
+          updatedAt,
+          lastLogin,
+          status
+        ]
       );
-
-      return { user_id };
+  
+      return { 
+        user_id, 
+        profile_image: finalProfileImage,
+        created_at: createdAt,
+        status
+      };
     } catch (err) {
       throw new Error("Error registering user: " + err.message);
     }
