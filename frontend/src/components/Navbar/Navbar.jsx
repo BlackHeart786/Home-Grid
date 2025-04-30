@@ -2,18 +2,20 @@ import Logo from "../../assets/logo2.png";
 import Profile from "../../assets/profile_logo.png";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Menu = [
   { id: 1, name: "HOME", link: "/", isActive: false },
   { id: 2, name: "SERVICES", link: "/#services", isActive: false },
   { id: 3, name: "ABOUT", link: "/#about", isActive: false },
-  { id: 4, name: "BOOKING", link: "/#booking", isActive: false },
+  { id: 4, name: "BOOKING", link: "/booking", isActive: false },
 ];
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
@@ -91,10 +93,7 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <Link
-              to="/login"
-              className="flex items-center space-x-1 group"
-            >
+            <Link to="/login" className="flex items-center space-x-1 group">
               <div className="w-10 h-10 rounded-full bg-gray-700/50 border-2 border-gray-600/60 flex items-center justify-center group-hover:bg-blue-500/20 group-hover:border-blue-400/40 transition-all">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
