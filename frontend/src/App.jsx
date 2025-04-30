@@ -15,12 +15,22 @@ import ListGallery from "./components/Services/ListGallery.jsx";
 import Login from "./components/Login/login.jsx";
 import Registration from "./components/Registration/registration.jsx";
 import Booking from "./components/Booking/Booking.jsx";
+import UploadForm from "./components/UploadForm"; // ✅ Added to use popup form
 
 const App = () => {
   const [showListGallery, setShowListGallery] = useState(false);
+  const [showUploadForm, setShowUploadForm] = useState(false); // ✅ Popup state
 
-  const handleGetStartedClick = () => {
+  const handleShowListing = () => {
     setShowListGallery(true);
+  };
+
+  const handleAddListing = () => {
+    setShowUploadForm(true); // ✅ Show popup
+  };
+
+  const closeUploadForm = () => {
+    setShowUploadForm(false); // ✅ Hide popup
   };
 
   return (
@@ -30,25 +40,40 @@ const App = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/Registration" element={<Registration />} />
           <Route path="/booking" element={<Booking />} />
-
           <Route
             path="/"
             element={
               <>
                 <Hero />
                 <Services />
-                <Experts onGetStartedClick={handleGetStartedClick} />
+                <Experts
+                  onGetStartedClick={handleShowListing}
+                  onAddListingClick={handleAddListing} // ✅ Pass new handler
+                />
                 {showListGallery && <ListGallery className="fade-in" />}
                 <div className="pt-5">
                   <NewsLetter />
                 </div>
                 <Plans />
                 <Footer />
+
+                {/* ✅ Upload Popup */}
+                {showUploadForm && (
+                  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+                    <div className="relative bg-white p-6 rounded-lg max-w-xl w-full shadow-lg">
+                      <button
+                        onClick={closeUploadForm}
+                        className="absolute top-2 right-2 text-black text-2xl font-bold hover:text-red-500"
+                      >
+                        ×
+                      </button>
+                      <UploadForm />
+                    </div>
+                  </div>
+                )}
               </>
             }
           />
-
-          {/* Redirect for unmatched routes */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

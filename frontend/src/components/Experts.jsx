@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import logo from "../assets/logo_home.png";
 
-function Experts({ onGetStartedClick }) {
+function Experts({ onGetStartedClick, onAddListingClick }) { // ✅ Added new prop
   return (
     <div className="max-w-[1240px] mx-auto my-2.5 md:grid grid-cols-2">
       <div className="col-span-1 md:w-[40%]">
@@ -25,7 +25,7 @@ function Experts({ onGetStartedClick }) {
             Show Listing
           </button>
           <button
-            onClick={onGetStartedClick}
+            onClick={onAddListingClick} // ✅ Updated to trigger popup
             className="w-[150px] h-[50px] bg-[#a531af] text-white font-bold p-3 rounded-lg m-3 hover:bg-[#3f61da] hover:scale-110 transition-transform duration-100 animate-pulse"
           >
             Add Listing
@@ -38,6 +38,7 @@ function Experts({ onGetStartedClick }) {
 
 Experts.propTypes = {
   onGetStartedClick: PropTypes.func.isRequired,
+  onAddListingClick: PropTypes.func.isRequired, // ✅ Added new prop validation
 };
 
 export default Experts;
