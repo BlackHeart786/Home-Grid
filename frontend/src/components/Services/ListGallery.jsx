@@ -64,7 +64,9 @@ const ListGallery = () => {
     },
   ];
 
+
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -72,23 +74,33 @@ const ListGallery = () => {
     }, 3000);
   }, []);
 
+  const filteredItems = items.filter((item) =>
+    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="bg-lightGray">
       {/* Header Section */}
-      <header className="text-white text-center pt-20">
-        <h1 className="text-4xl font-bold">Available For Rent</h1>
+      <header className="text-white pt-20 px-6 flex flex-col md:flex-row md:items-center md:justify-between container mx-auto">
+        <h1 className="text-4xl font-bold mb-4 md:mb-0">Available For Rent</h1>
+        <input
+          type="text"
+          placeholder="Search location..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full md:w-80 p-2 rounded-md text-black"
+        />
       </header>
 
       {/* Image Gallery */}
-      <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-32">
+      <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-16">
         {isLoading
           ? Array.from({ length: 10 }).map((_, index) => (
               <div key={index} className="relative group">
                 <SkeletonLoader />
               </div>
             ))
-          : // Show actual items when not loading
-            items.map((item) => (
+          : filteredItems.map((item) => (
               <div key={item.id} className="relative group">
                 <a href={item.image}>
                   <img
