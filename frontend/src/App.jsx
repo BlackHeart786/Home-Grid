@@ -15,7 +15,10 @@ import ListGallery from "./components/Services/ListGallery.jsx";
 import Login from "./components/Login/login.jsx";
 import Registration from "./components/Registration/registration.jsx";
 import Booking from "./components/Booking/Booking.jsx";
+
 import UploadForm from "./components/UploadForm"; // ✅ Added to use popup form
+
+import Details from "./components/Details/Details.jsx";
 
 const App = () => {
   const [showListGallery, setShowListGallery] = useState(false);
@@ -45,6 +48,7 @@ const App = () => {
             element={
               <>
                 <Hero />
+                {/* <Details /> */}
                 <Services />
                 <Experts
                   onGetStartedClick={handleShowListing}
