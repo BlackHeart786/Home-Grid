@@ -1,7 +1,6 @@
 # 🌆 City Stay & Parking Booking Platform Grid 🚗🏨
 
-Welcome to the **City Stay & Parking Booking Platform**, an all-in-one solution for booking accommodations and renting parking spaces in your favorite cities. Whether you're traveling for business or leisure, this platform provides an easy way to find rooms for your stay and parking spots for your vehicle.
-
+Welcome to the **City Stay & Parking Booking Platform**, an all-in-one solution for booking accommodations and renting parking spaces in your cities. 
 ## ✨ Features
 
 - **Hotel & Room Booking:** Easily browse and book rooms in various cities across the globe.
