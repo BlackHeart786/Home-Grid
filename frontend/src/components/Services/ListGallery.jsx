@@ -1,124 +1,99 @@
 import { useState, useEffect } from "react";
 import SkeletonLoader from "../SkeletonLoader";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 
-const ListGallery = () => {
-  const items = [
-    {
-      id: 1,
-      image:
-        "https://img-v2.gtsstatic.net/reno/imagereader.aspx?imageurl=https%3A%2F%2Fsir.azureedge.net%2F1103i215%2Fpnjaazd09nyy4cy9e5yv47nb00i215&option=N&h=472&permitphotoenlargement=false",
-      title: "Park circus",
-    },
-    {
-      id: 2,
-      image:
-        "https://a0.muscache.com/im/pictures/miso/Hosting-6076545/original/a1d3fe69-57d3-4666-9cee-85a45dbfb18d.jpeg?im_w=720&im_format=avif",
-      title: "Howrah",
-    },
-    {
-      id: 3,
-      image:
-        "https://www.mumbaiexpathousing.com/propertyimg/Mumbai-Expats-Housing-883-3.jpeg",
-      title: "Kalighat",
-    },
-    {
-      id: 4,
-      image:
-        "https://ik.imagekit.io/flashaway/thumb_large_8c42f35c-0ca5-42a1-a043-52481fe8c87e.jpg",
-      title: "Dhakuria",
-    },
-    {
-      id: 5,
-      image:
-        "https://images.nobroker.in/images/8a9f8f83936447a3019364804c3e0a0b/8a9f8f83936447a3019364804c3e0a0b_81200_282957_medium.jpg",
-      title: "Ballygunge",
-    },
-    {
-      id: 6,
-      image: "https://apollo.olx.in/v1/files/13pbg86yr9r83-IN/image;s=272x0",
-      title: "Dharmatala",
-    },
-    {
-      id: 7,
-      image:
-        "https://imagecdn.99acres.com/media1/24944/9/498889911M-1732009806066.jpg",
-      title: "Damdam",
-    },
-    {
-      id: 8,
-      image:
-        "https://www.mumbaiexpathousing.com/propertyimg/Mumbai-Expats-Housing-864-12.jpeg",
-      title: "Karunamoye",
-    },
-    {
-      id: 9,
-      image:
-        "https://imagecdn.99acres.com/media1/26931/10/538630669M-1734504006111.jpg",
-      title: "Mahisbathan",
-    },
-    {
-      id: 10,
-      image:
-        "https://bsmedia.business-standard.com/_media/bs/img/article/2023-07/25/full/1690302846-8749.jpg?im=FeatureCrop,size=(826,465)",
-      title: "New town",
-    },
-  ];
-
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+export default function ImageGallery() {
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    async function fetchImages() {
+      try {
+        setLoading(true);
+        const response = await axios.get("http://localhost:3000/api/images");
+        setImages(response.data);
+      } catch (err) {
+        setError(
+          err.response?.data?.message || err.message || "Failed to load images"
+        );
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchImages();
   }, []);
 
-  const filteredItems = items.filter((item) =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const handleImageClick = (listingId) => {
+    navigate(`/listings/${listingId}`);
+  };
 
-  return (
-    <div className="bg-lightGray">
-      {/* Header Section */}
-      <header className="text-white pt-20 px-6 flex flex-col md:flex-row md:items-center md:justify-between container mx-auto">
-        <h1 className="text-4xl font-bold mb-4 md:mb-0">Available For Rent</h1>
-        <input
-          type="text"
-          placeholder="Search location..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full md:w-80 p-2 rounded-md text-black"
-        />
-      </header>
-
-      {/* Image Gallery */}
-      <div className="container mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 pt-16">
-        {isLoading
-          ? Array.from({ length: 10 }).map((_, index) => (
-              <div key={index} className="relative group">
-                <SkeletonLoader />
-              </div>
-            ))
-          : filteredItems.map((item) => (
-              <div key={item.id} className="relative group">
-                <a href={item.image}>
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-80 object-cover rounded-lg transition-transform transform group-hover:scale-105"
-                  />
-                </a>
-                <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-2 text-center rounded-b-lg">
-                  <span className="text-[#f1dabf] font-semibold text-lg">
-                    {item.title}
-                  </span>
-                </div>
-              </div>
-            ))}
+  if (error) return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center p-6 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-red-600 mb-4">Error</h2>
+        <p className="mb-4">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Try Again
+        </button>
       </div>
     </div>
   );
-};
 
-export default ListGallery;
+  return (
+    <div className="min-h-screen p-6 bg-gray-50">
+      <div className="container mx-auto">
+        <h1 className="text-3xl font-bold mt-9 mb-9 text-black">Available For Rent</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {loading ? (
+            Array(12).fill().map((_, i) => (
+              <div key={i} className="bg-white rounded-lg overflow-hidden shadow-md">
+                <SkeletonLoader height="100%" className="relative pt-[100%]" />
+                <div className="p-4">
+                  <SkeletonLoader height="20px" width="80%" className="mb-2" />
+                  <SkeletonLoader height="12px" width="60%" />
+                </div>
+              </div>
+            ))
+          ) : images.length > 0 ? (
+            images.map((image) => (
+              <div
+                key={image.image_id}
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => handleImageClick(image.listing_id)}
+              >
+                <div className="relative pt-[100%] bg-gray-200">
+                  <img
+                    src={image.image_url}
+                    alt={image.caption || "Image"}
+                    className="absolute top-0 left-0 w-full h-full object-cover"
+                    onError={(e) => (e.target.src = "/placeholder-image.jpg")}
+                  />
+                </div>
+                <div className="p-4">
+                  {image.caption && (
+                    <p className="font-medium text-gray-800 mb-2 truncate">
+                      {image.caption}
+                    </p>
+                  )}
+                  <p className="text-xs text-gray-500">
+                    Uploaded: {new Date(image.uploaded_at).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-10">
+              <h3 className="text-xl font-semibold">No images found</h3>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

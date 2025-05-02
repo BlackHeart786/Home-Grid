@@ -1,7 +1,7 @@
 export default function Plans() {
   return (
     <div className="py-[100px] px-3">
-      <div className="max-w-[1240px] mx-auto md:grid grid-cols-3  gap-5">
+      <div className="max-w-[1240px] mx-auto md:grid grid-cols-3  gap-7">
         <div className="shadow-2xl h-[500px] flex flex-col my-4 p-4 rounded-[40px] hover:scale-105 duration-500">
           <h2 className="text-[12px] md:text-2xl font-bold  text-black pt-20 text-center py-8">
             FREE BOOKING

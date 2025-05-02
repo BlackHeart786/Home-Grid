@@ -15,25 +15,23 @@ import ListGallery from "./components/Services/ListGallery.jsx";
 import Login from "./components/Login/login.jsx";
 import Registration from "./components/Registration/registration.jsx";
 import Booking from "./components/Booking/Booking.jsx";
-
-import UploadForm from "./components/UploadForm"; // ✅ Added to use popup form
-
-import Details from "./components/Details/Details.jsx";
+import UploadForm from "./components/UploadForm"; 
+import ListingDetails from "./components/ListingDetails/ListingDetails.jsx"; // Make sure to create this component
 
 const App = () => {
   const [showListGallery, setShowListGallery] = useState(false);
-  const [showUploadForm, setShowUploadForm] = useState(false); // ✅ Popup state
+  const [showUploadForm, setShowUploadForm] = useState(false); 
 
   const handleShowListing = () => {
     setShowListGallery(true);
   };
 
   const handleAddListing = () => {
-    setShowUploadForm(true); // ✅ Show popup
+    setShowUploadForm(true); 
   };
 
   const closeUploadForm = () => {
-    setShowUploadForm(false); // ✅ Hide popup
+    setShowUploadForm(false); 
   };
 
   return (
@@ -43,16 +41,16 @@ const App = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/Registration" element={<Registration />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/listings/:listingId" element={<ListingDetails />} />
           <Route
             path="/"
             element={
               <>
                 <Hero />
-                {/* <Details /> */}
                 <Services />
                 <Experts
                   onGetStartedClick={handleShowListing}
-                  onAddListingClick={handleAddListing} // ✅ Pass new handler
+                  onAddListingClick={handleAddListing} 
                 />
                 {showListGallery && <ListGallery className="fade-in" />}
                 <div className="pt-5">
@@ -61,7 +59,6 @@ const App = () => {
                 <Plans />
                 <Footer />
 
-                {/* ✅ Upload Popup */}
                 {showUploadForm && (
                   <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="relative bg-white p-6 rounded-lg max-w-xl w-full shadow-lg">
