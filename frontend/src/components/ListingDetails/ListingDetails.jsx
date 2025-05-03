@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import SkeletonLoader from "../SkeletonLoader";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ListingDetails() {
   const { listingId } = useParams();
@@ -185,19 +187,33 @@ export default function ListingDetails() {
                   </p>
                 </div>
               </div>
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="w-full sm:w-auto flex-1 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition">
-                    💬 Chat
-                  </button>
-                  <button className="w-full sm:w-auto flex-1 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition">
-                    🚀 Book Now
-                  </button>
-                </div>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <button className="w-full sm:w-auto flex-1 py-3 bg-green-500 text-white font-medium rounded-lg hover:bg-green-600 transition">
+                  💬 Chat
+                </button>
+                <button
+                  className="w-full sm:w-auto flex-1 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition"
+                  onClick={() =>
+                    toast.success("✅ We will contact you shortly!", {
+                      position: "top-center",
+                      autoClose: 4000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                    })
+                  }
+                >
+                  🚀 Book Now
+                </button>
+                <ToastContainer />
+
               </div>
             </div>
           </div>
         </div>
       </div>
-    
+    </div>
   );
 }
